@@ -15,19 +15,19 @@ import { BOOKS } from "../models";
 
 
 const Homepage = () => {
-    const [title, setTitle] = useState('All Books')
+    const [title, setTitle] = useState('all books')
     const [query, setQuery] = useState('')
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(false)
 
 
-    const [filteredBooks, setFilteredBooks] = useState<BOOKS>([] as BOOKS)
+    const [books, setBooks] = useState<BOOKS>([] as BOOKS)
 
     const fetchAllBooks = async () => {
         setLoading(true)
         await axios.get(`${BASE_URL}/books/all`)
             .then(res => {
-                setFilteredBooks(res.data.books)
+                setBooks(res.data.books)
                 setLoading(false)
                 setError(false)
             })
@@ -39,8 +39,9 @@ const Homepage = () => {
     }
 
     const handleTitle = (genre: string) => {
-        setTitle(genre)
+        setTitle(genre) 
     }
+
 
     useEffect(() => {
         fetchAllBooks()
@@ -67,7 +68,7 @@ const Homepage = () => {
             <section className="flex justify-between py-8">
                 {
                     categories.map((category) => (
-                        <span className="hover:cursor-pointer capitalize" onClick={() => { handleTitle(category.genre) }} key={category.id}>{category.genre}</span>
+                        <span className="hover:cursor-pointer capitalize" onClick={() => { handleTitle(category.genre) }}  key={category.id}>{category.genre}</span>
                     ))
                 }
             </section>
@@ -81,7 +82,26 @@ const Homepage = () => {
                 <p className="cursor-pointer" onClick={() => {fetchAllBooks}}>Try again</p></div> : <section className="grid grid-cols-4 gap-5">
                 {
                     loading ?
-                        <div className="flex items-center w-full justify-center col-span-4"><Spinner size={'xl'} /></div> : filteredBooks.map((book) => (
+                        <div className="flex items-center w-full justify-center col-span-4"><Spinner size={'xl'} /></div> : 
+                        books.filter((val) => {
+                            if(query === ''){
+                                return val
+                            }else if (
+                                val.title.toLowerCase().includes(query.toLowerCase())
+                            ){
+                                return val
+                            }
+                        })
+                        .filter((val2) => {
+                            if(title === 'all books'){
+                                return val2
+                            }else if(
+                                val2.genre.toLowerCase().includes(title.toLowerCase())
+                            ){
+                                return val2
+                            }
+                        })
+                        .map((book) => (
 
                             <CardComponent key={book._id} book={book} />
                         ))
@@ -89,6 +109,8 @@ const Homepage = () => {
 
 
             </section>}
+
+            {!books && <p>No books to display</p>}
         </MainLayout>
     );
 }

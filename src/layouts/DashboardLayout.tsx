@@ -4,7 +4,7 @@ const DashboardLayout = ({children} : {children : React.ReactNode}) => {
     return ( 
 
       <main className="flex h-screen">
-         <section className="md:basis-[20%] basis-0">
+         <section className="md:basis-[20%] basis-0  ">
             <div className="md:flex flex-col gap-y-10 h-screen fixed p-5 hidden">
                 <div>LOGO</div>
 
@@ -19,7 +19,7 @@ const DashboardLayout = ({children} : {children : React.ReactNode}) => {
             
         </section> 
 
-        <section className="md:basis-[80%] basis-full">
+        <section className="md:basis-[80%] basis-full h-screen">
             {children}
         </section>
 

@@ -1,6 +1,6 @@
-import { Avatar, Button } from "flowbite-react";
+import { Avatar, Button, Spinner } from "flowbite-react";
 import DashboardLayout from "../layouts/DashboardLayout";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { BOOK } from "../models";
 import axios from "axios";
@@ -10,12 +10,14 @@ const DashboardBook = () => {
 
     const {slug} = useParams()
 
+    const navigate = useNavigate()
+
     const [book, setBook] = useState<BOOK>({} as BOOK)
+    const [loading, setLoading] = useState(false)
 
     const fetchBook = async() => {
         await axios.get(`${BASE_URL}/books/all/${slug}`)
         .then(res => {
-            console.log(res.data.book)
             setBook(res.data.book)
         })
         .catch(err => {
@@ -25,7 +27,20 @@ const DashboardBook = () => {
 
 
     const handleDelete = async() => {
-        alert('deleted')
+
+        setLoading(true)
+
+        const token = localStorage.getItem('token')
+        await axios.delete(`${BASE_URL}/books/${slug}`, {headers : {Authorization : `Bearer ${token}`}})
+        .then(res => {
+            console.log(res)
+            setLoading(false)
+            navigate('/dashboard')
+        })
+        .catch((err) => {
+            console.log(err)
+            setLoading(false)
+        })
     }
 
 
@@ -58,7 +73,7 @@ const DashboardBook = () => {
                     </Link>
 
                     
-                    <Button onClick={handleDelete} color="warning">Delete</Button>
+                    {loading ? <Button disabled color="warning"><Spinner color="warning"/></Button> : <Button onClick={handleDelete} color="warning">Delete</Button>}
                     
                     
                 </div>

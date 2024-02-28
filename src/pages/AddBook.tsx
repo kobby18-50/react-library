@@ -1,22 +1,58 @@
 import { Button, Label, Select, TextInput, Textarea } from "flowbite-react";
 import DashboardLayout from "../layouts/DashboardLayout";
 import { useState } from "react";
-import { genres } from "../utils";
+import { BASE_URL, genres } from "../utils";
+import axios from "axios";
+import SpinnerButton from "../components/SpinnerButton";
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 const AddBook = () => {
 
     const [title, setTitle] = useState('')
     const [genre, setGenre] = useState('')
     const [content, setContent] = useState('')
+    const [loading, setLoading] = useState(false)
 
-    const handleSubmit = (e : React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async(e : React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        console.log(title, genre, content)
+        const data = {
+            title,
+            genre,
+            content
+        }
+
+        const token = localStorage.getItem('token')
+
+        setLoading(true)
+
+        await axios.post(`${BASE_URL}/books`, data, {headers : {
+            Authorization : `Bearer ${token}`
+        }})
+        .then((res) => {
+            console.log(res)
+
+            setLoading(false)
+
+            toast.success('Book Added Successfully', {
+                autoClose: 1500,
+                position: "top-center",
+               })
+        })
+        .catch((err) => {
+            console.log(err)
+            setLoading(false)
+            toast.error(err.response.data.msg, {
+                autoClose: 1500,
+                position: "top-center",
+               })
+        })
     }
 
     return (
         <DashboardLayout>
+            <ToastContainer/>
             <section>
                <h1 className="p-10 font-semibold"> Add Book</h1>
 
@@ -42,7 +78,7 @@ const AddBook = () => {
                         <Textarea  value={content} onChange={e => setContent(e.target.value)} id="content"  placeholder="Write content here.." className="w-full" required />
                     </div>
 
-                    <Button type="submit">Add Book</Button>
+                   {loading ? <SpinnerButton/> :  <Button type="submit">Add Book</Button>}
 
                 </form>
             </section>

@@ -11,8 +11,13 @@ const Dashboard = () => {
     const [loading, setLoading] = useState(false)
 
     const fetchBooks = async() => {
+        const token = localStorage.getItem('token')
+
         setLoading(true)
-        await axios.get(`${BASE_URL}/books/all`)
+        
+        await axios.get(`${BASE_URL}/books`, {headers : {
+            Authorization : `Bearer ${token}`
+        }})
         .then((res) => {
 
             setBooks(res.data.books)
@@ -43,7 +48,9 @@ const Dashboard = () => {
                 </section>
 
                {
-                loading ? <div className="flex items-center w-full justify-center h-screen"><Spinner size={'xl'} /></div> :  <section className="p-3 grid ">
+                loading ? <div className="flex items-center w-full justify-center h-screen"><Spinner size={'xl'} /></div> :  <section className="p-3 grid  bg-slate-500 ">
+
+                   
                   
                 {
                      books.map((book) => (
