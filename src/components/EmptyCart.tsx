@@ -3,7 +3,10 @@ import EMPTY from '../assets/empty.png'
 
 const EmptyCart = () => {
     return ( 
-        <figure><img className="w-56 items-center justify-center" src={EMPTY} alt="empty" /> <span>No books to display</span></figure>
+        <figure className='flex flex-col'>
+            <img className="w-56 items-center justify-center" src={EMPTY} alt="empty" />
+             <p className='text-center'>No books to display</p>
+             </figure>
      );
 }
  

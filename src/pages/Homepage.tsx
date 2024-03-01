@@ -78,7 +78,7 @@ const Homepage = () => {
             {/* card */}
 
             {error ? <div className="flex items-center flex-col justify-center"><p>Error fetching resource</p>
-                <p className="cursor-pointer" onClick={() => {fetchAllBooks()}}>Try again</p></div> : <section className="grid lg:grid-cols-4 md:grid-cols-2 gap-5 justify-center">
+                <p className="cursor-pointer" onClick={() => fetchAllBooks()}>Try again</p></div> : <section className="grid lg:grid-cols-4 md:grid-cols-2 gap-5 justify-center">
                 {
                     loading ?
                         <div className="flex items-center w-full justify-center col-span-4"><Spinner size={'xl'} /></div> : 
@@ -111,9 +111,13 @@ const Homepage = () => {
 
             </section>}
 
-            {(books.length === 0 && !loading) && <div className="flex ">
+            {(books.length === 0 && !loading) &&  <div className="flex w-full items-center justify-center">
             <EmptyCart/>
+
             </div> }
+
+
+           
 
             
 

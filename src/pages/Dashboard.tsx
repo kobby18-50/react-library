@@ -61,7 +61,7 @@ const Dashboard = () => {
              </section>
                }
 
-               {books.length === 0 && <div className="">
+               {books.length === 0 && <div className="flex w-full items-center justify-center">
                 <EmptyCart/>
                 </div>}
 
