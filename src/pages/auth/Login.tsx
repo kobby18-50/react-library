@@ -17,7 +17,6 @@ const Login = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLElement>) => {
         e.preventDefault()
-        console.log(email, password)
 
         const data = {
             email,
@@ -26,8 +25,10 @@ const Login = () => {
         setLoading(true)
         await axios.post(`${BASE_URL}/auth/login`, data)
             .then((response) => {
-                console.log(response)
-
+                // saving fname and lname
+                localStorage.setItem('fname', response.data.user.firstname)
+                localStorage.setItem('lname', response.data.user.lastname)
+                // saving token
                 localStorage.setItem('token', response.data.token)
                 setLoading(false)
                toast.success('Login Successful', {

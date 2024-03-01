@@ -71,6 +71,7 @@ const EditBook = () => {
 
         await axios.patch(`${BASE_URL}/books/${slug}`, data, { headers : {Authorization : `Bearer ${token} `}})
         .then(res => {
+            console.log(res)
             toast.success('Book Updated Successfully', {
                 autoClose: 1500,
                 position: "top-center",

@@ -1,7 +1,7 @@
 // layout
 import MainLayout from "../layouts/MainLayout";
 // flowbite
-import { Button, Spinner, TextInput } from "flowbite-react";
+import { Spinner, TextInput } from "flowbite-react";
 // components
 import CardComponent from "../components/CardComponent";
 // utils
@@ -53,19 +53,15 @@ const Homepage = () => {
 
 
 
-            <form className="flex w-full p-2 gap-x-2 py-10">
+           <section className="p-5">
+           <form className="flex w-full py-10">
                 <div className="w-full">
                     <TextInput type="search" className="" placeholder="Search by book title" value={query} onChange={e => setQuery(e.target.value)} />
-                </div>
-
-                <div>
-
-                    <Button>Search</Button>
                 </div>
             </form>
 
             {/* genre */}
-            <section className="flex justify-between py-8">
+            <section className="flex justify-between py-8 gap-5 flex-wrap">
                 {
                     categories.map((category) => (
                         <span className="hover:cursor-pointer capitalize" onClick={() => { handleTitle(category.genre) }}  key={category.id}>{category.genre}</span>
@@ -79,7 +75,7 @@ const Homepage = () => {
             {/* card */}
 
             {error ? <div className="flex items-center flex-col justify-center"><p>Error fetching resource</p>
-                <p className="cursor-pointer" onClick={() => {fetchAllBooks}}>Try again</p></div> : <section className="grid grid-cols-4 gap-5">
+                <p className="cursor-pointer" onClick={() => {fetchAllBooks()}}>Try again</p></div> : <section className="grid lg:grid-cols-4 md:grid-cols-2 gap-5 justify-center">
                 {
                     loading ?
                         <div className="flex items-center w-full justify-center col-span-4"><Spinner size={'xl'} /></div> : 
@@ -111,6 +107,7 @@ const Homepage = () => {
             </section>}
 
             {!books && <p>No books to display</p>}
+           </section>
         </MainLayout>
     );
 }

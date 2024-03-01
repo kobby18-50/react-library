@@ -53,8 +53,8 @@ const AddBook = () => {
     return (
         <DashboardLayout>
             <ToastContainer/>
-            <section>
-               <h1 className="p-10 font-semibold"> Add Book</h1>
+            <section className="border h-full">
+               <h1 className="p-10 font-semibold">Add Book</h1>
 
                 <form onSubmit={handleSubmit} className="flex flex-col gap-5 gap-y-10 p-10">
                     <div className="flex flex-col w-full gap-3">
