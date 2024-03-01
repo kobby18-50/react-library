@@ -7,11 +7,11 @@ import CardComponent from "../components/CardComponent";
 // utils
 import { BASE_URL, categories } from "../utils";
 import axios from "axios";
-import EMPTY from '../assets/empty.png'
 // react
 import { useEffect, useState } from "react";
 // models
 import { BOOKS } from "../models";
+import EmptyCart from "../components/EmptyCart";
 
 
 
@@ -107,10 +107,12 @@ const Homepage = () => {
                 }
 
 
+
+
             </section>}
 
-            {books.length === 0 && <div className="flex ">
-            <figure><img className="w-56 items-center justify-center" src={EMPTY} alt="empty" /> <span>No books to display</span></figure>
+            {(books.length === 0 && !loading) && <div className="flex ">
+            <EmptyCart/>
             </div> }
 
             

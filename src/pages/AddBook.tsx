@@ -6,6 +6,7 @@ import axios from "axios";
 import SpinnerButton from "../components/SpinnerButton";
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 const AddBook = () => {
 
@@ -13,6 +14,8 @@ const AddBook = () => {
     const [genre, setGenre] = useState('')
     const [content, setContent] = useState('')
     const [loading, setLoading] = useState(false)
+
+    const navigate = useNavigate()
 
     const handleSubmit = async(e : React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -39,6 +42,10 @@ const AddBook = () => {
                 autoClose: 1500,
                 position: "top-center",
                })
+
+            setTimeout(() => {
+                navigate('/dashboard')
+            },2000)
         })
         .catch((err) => {
             console.log(err)
@@ -75,7 +82,7 @@ const AddBook = () => {
                     </div>
                     <div className="flex flex-col w-full gap-3">
                         <Label htmlFor="content">Content</Label>
-                        <Textarea  value={content} onChange={e => setContent(e.target.value)} id="content"  placeholder="Write content here.." className="w-full" required />
+                        <Textarea  value={content} onChange={e => setContent(e.target.value)} id="content"  placeholder="Write content here.." className="w-full" rows={5} required />
                     </div>
 
                    {loading ? <SpinnerButton/> :  <Button type="submit">Add Book</Button>}

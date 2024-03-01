@@ -6,6 +6,7 @@ import axios from "axios";
 import { BASE_URL } from "../utils";
 import { BOOKS } from "../models";
 import CustomAvatar from "../components/CustomAvatar";
+import EmptyCart from "../components/EmptyCart";
 
 const Dashboard = () => {
     const [books, setBooks] = useState<BOOKS>([] as BOOKS)
@@ -59,6 +60,10 @@ const Dashboard = () => {
              
              </section>
                }
+
+               {books.length === 0 && <div className="">
+                <EmptyCart/>
+                </div>}
 
             </main>
         </DashboardLayout>
