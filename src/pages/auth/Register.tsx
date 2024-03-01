@@ -33,6 +33,7 @@ const Register = () => {
 
         await axios.post(`${BASE_URL}/auth/register`, data)
             .then((res) => {
+                console.log(res)
                 setLoading(false)
 
                 toast.success('Registeration Successful Log in now', {
