@@ -8,6 +8,9 @@ import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 
+// redux
+import { useAppSelector } from "../redux/app/hooks";
+
 const AddBook = () => {
 
     const [title, setTitle] = useState('')
@@ -16,6 +19,9 @@ const AddBook = () => {
     const [loading, setLoading] = useState(false)
 
     const navigate = useNavigate()
+    // token from store
+    const token = useAppSelector((state) => state.user.user.token)
+
 
     const handleSubmit = async(e : React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -25,8 +31,6 @@ const AddBook = () => {
             genre,
             content
         }
-
-        const token = localStorage.getItem('token')
 
         setLoading(true)
 

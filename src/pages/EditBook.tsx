@@ -7,6 +7,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import SpinnerButton from "../components/SpinnerButton";
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+// redux
+import { useAppSelector } from "../redux/app/hooks";
 
 type Book = {
     title : string,
@@ -26,8 +28,9 @@ const EditBook = () => {
     const [loading, setLoading] = useState(false)
 
     const navigate = useNavigate()
+    // token
+    const token = useAppSelector((state) => state.user.user.token)
 
-    
 
     const {slug} = useParams()
 
@@ -67,7 +70,6 @@ const EditBook = () => {
             content : book.content
         }
 
-        const token = localStorage.getItem('token')
 
         await axios.patch(`${BASE_URL}/books/${slug}`, data, { headers : {Authorization : `Bearer ${token} `}})
         .then(res => {

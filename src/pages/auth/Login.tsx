@@ -8,11 +8,16 @@ import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import SpinnerButton from "../../components/SpinnerButton";
 
+import { useAppDispatch } from "../../redux/app/hooks";
+import { getUser } from "../../redux/features/user/userSlice";
+
 const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
 
+    const dispatch = useAppDispatch()
+    
     const navigate = useNavigate()
 
     const handleSubmit = async (e: React.FormEvent<HTMLElement>) => {
@@ -25,11 +30,7 @@ const Login = () => {
         setLoading(true)
         await axios.post(`${BASE_URL}/auth/login`, data)
             .then((response) => {
-                // saving fname and lname
-                localStorage.setItem('fname', response.data.user.firstname)
-                localStorage.setItem('lname', response.data.user.lastname)
-                // saving token
-                localStorage.setItem('token', response.data.token)
+                dispatch(getUser(response.data))
                 setLoading(false)
                toast.success('Login Successful', {
                 autoClose: 1500,

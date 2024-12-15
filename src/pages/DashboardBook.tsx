@@ -7,6 +7,8 @@ import axios from "axios";
 import { BASE_URL } from "../utils";
 import CustomAvatar from "../components/CustomAvatar";
 import { MdErrorOutline } from "react-icons/md";
+// redux
+import { useAppSelector } from "../redux/app/hooks";
 
 
 const DashboardBook = () => {
@@ -17,7 +19,11 @@ const DashboardBook = () => {
 
     const [book, setBook] = useState<BOOK>({} as BOOK)
     const [loading, setLoading] = useState(false)
-    const [openModal, setOpenModal] = useState(false);
+    const [openModal, setOpenModal] = useState(false)
+
+     // token from store
+     const token = useAppSelector((state) => state.user.user.token)
+     console.log(token)
 
 
     const fetchBook = async () => {
@@ -32,10 +38,7 @@ const DashboardBook = () => {
 
 
     const handleDelete = async () => {
-
         setLoading(true)
-
-        const token = localStorage.getItem('token')
         await axios.delete(`${BASE_URL}/books/${slug}`, { headers: { Authorization: `Bearer ${token}` } })
             .then(res => {
                 console.log(res)

@@ -7,13 +7,19 @@ import { BASE_URL } from "../utils";
 import { BOOKS } from "../models";
 import CustomAvatar from "../components/CustomAvatar";
 import EmptyCart from "../components/EmptyCart";
+// hooks
+import { useAppSelector } from "../redux/app/hooks";
 
 const Dashboard = () => {
     const [books, setBooks] = useState<BOOKS>([] as BOOKS)
     const [loading, setLoading] = useState(false)
 
+    // token from store
+    const token = useAppSelector((state) => state.user.user.token)
+    console.log(token)
+
     const fetchBooks = async() => {
-        const token = localStorage.getItem('token')
+        
 
         setLoading(true)
         

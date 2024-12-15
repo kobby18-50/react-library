@@ -12,32 +12,37 @@ import { useEffect, useState } from "react";
 // models
 import { BOOKS } from "../models";
 import EmptyCart from "../components/EmptyCart";
+// redux
+import { useAppDispatch, useAppSelector } from "../redux/app/hooks";
+import { start,fetchSuccess,fetchFailed } from "../redux/features/books/bookSlice";
 
 
 
 const Homepage = () => {
     const [title, setTitle] = useState('all books')
     const [query, setQuery] = useState('')
-    const [loading, setLoading] = useState(false)
-    const [error, setError] = useState(false)
 
 
     const [books, setBooks] = useState<BOOKS>([] as BOOKS)
 
+
+    const loading = useAppSelector((state) => state.book.loading)
+    const error = useAppSelector(state => state.book.error)
+
+    const dispatch = useAppDispatch()
+
+   
+
     const fetchAllBooks = async () => {
-        setLoading(true)
+        dispatch(start())
         await axios.get(`${BASE_URL}/books/all`)
             .then(res => {
-
-                console.log(res.data.books)
                 setBooks(res.data.books)
-                setLoading(false)
-                setError(false)
+                dispatch(fetchSuccess())
             })
             .catch(err => {
                 console.log(err)
-                setError(true)
-                setLoading(true)
+                dispatch(fetchFailed('Failed to fetch required resource'))
             })
     }
 
@@ -77,7 +82,7 @@ const Homepage = () => {
 
             {/* card */}
 
-            {error ? <div className="flex items-center flex-col justify-center"><p>Error fetching resource</p>
+            {error ? <div className="flex items-center flex-col justify-center"><p>{error}</p>
                 <p className="cursor-pointer" onClick={() => fetchAllBooks()}>Try again</p></div> : <section className="grid lg:grid-cols-4 md:grid-cols-2 gap-5 justify-center">
                 {
                     loading ?
@@ -111,7 +116,7 @@ const Homepage = () => {
 
             </section>}
 
-            {(books.length === 0 && !loading) &&  <div className="flex w-full items-center justify-center">
+            {(books.length === 0 && !loading && !error) &&  <div className="flex w-full items-center justify-center">
             <EmptyCart/>
 
             </div> }
