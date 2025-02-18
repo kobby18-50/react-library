@@ -1,4 +1,5 @@
 import CustomNav from "../components/CustomNav";
+import Footer from "../components/Footer";
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
     return (
@@ -9,9 +10,11 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
                 <CustomNav/>
 
                 <div>{children}</div>
+            <Footer/>
             </section>
 
             <section className="md:basis-[10%] basis-0 " />
+
 
         </main>
     );

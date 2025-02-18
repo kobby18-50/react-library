@@ -1,4 +1,4 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import LOGO from '../assets/logo.png'
 
 const DashboardLayout = ({children} : {children : React.ReactNode}) => {
@@ -21,7 +21,9 @@ const DashboardLayout = ({children} : {children : React.ReactNode}) => {
          <section className="md:basis-[20%] basis-0 ">
             <div className="md:flex flex-col gap-y-10 h-screen fixed p-5 hidden">
                 <figure>
+                    <Link to='/'>
                     <img src={LOGO} alt="logo" className="w-24" />
+                    </Link>
 
                 </figure>
 

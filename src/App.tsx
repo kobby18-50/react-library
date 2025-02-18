@@ -8,6 +8,7 @@ import AddBook from './pages/AddBook'
 import Dashboard from './pages/Dashboard'
 import DashboardBook from './pages/DashboardBook'
 import EditBook from './pages/EditBook'
+import Footer from './components/Footer'
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
 
         <Route path='/book/:slug' element={<SingleBook/>} />
       </Routes>
+
       
       
     </section>

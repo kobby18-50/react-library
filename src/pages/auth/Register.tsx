@@ -87,8 +87,10 @@ const Register = () => {
                         <Button type="submit" className="w-full">Register</Button>
                     </div>}
 
-                    <div>
+                    <div className="flex items-center gap-x-2">
                         <small>Already have an account <Link className="underline" to={'/auth/login'}>Log in instead</Link></small>
+                        <em><small>or</small></em>
+                        <small className="underline"><Link to='/'>Go Back Home</Link></small>
                     </div>
                 </form>
             </main>

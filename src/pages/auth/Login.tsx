@@ -81,8 +81,9 @@ const Login = () => {
 
 
 
-                    <div>
-                        <small>Not registered yet? <Link className="underline" to={'/auth/register'}>Create an account now</Link></small>
+                    <div className="flex gap-x-2 items-center">
+                        <small>Not registered yet? <Link className="underline" to={'/auth/register'}>Create an account now</Link></small> <em><small>or</small></em>
+                        <small className="underline"><Link to='/'>Go Back Home</Link></small>
                     </div>
                 </form>
 
